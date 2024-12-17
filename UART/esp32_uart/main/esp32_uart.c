@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "driver/uart.h"
+#include "driver/gpio.h"
 #include "esp_log.h"
+#include <string.h>
 
 #define UART_NUM UART_NUM_2 // Use UART2 for GPIO16 and GPIO17
 #define TX_PIN GPIO_NUM_17  // TX2 pin

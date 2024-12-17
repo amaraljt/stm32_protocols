@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "esp32_uart",
-    "project_version":    "e3e6550-dirty",
+    "project_version":    "d046984-dirty",
     "project_path":       "/home/szensei/Projects/stm32_protocols/UART/esp32_uart",
     "idf_path":           "/opt/esp-idf",
     "build_dir":          "/home/szensei/Projects/stm32_protocols/UART/esp32_uart/build",
