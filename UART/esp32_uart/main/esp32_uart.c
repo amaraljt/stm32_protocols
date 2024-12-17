@@ -9,8 +9,6 @@
 #define RX_PIN GPIO_NUM_16  // RX2 pin
 #define BUF_SIZE 1024
 
-static const char *TAG = "UART Example";
-
 void app_main() {
     // Configure UART parameters
     uart_config_t uart_config = {
@@ -20,9 +18,10 @@ void app_main() {
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
     };
-
+    
+    QueueHandle_t uart_queue;
     // Install the driver and configure the pins
-    ESP_ERROR_CHECK(uart_driver_install(UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, 0));
+    ESP_ERROR_CHECK(uart_driver_install(UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 10, &uart_queue, 0));
     ESP_ERROR_CHECK(uart_param_config(UART_NUM, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(UART_NUM, TX_PIN, RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
 
@@ -32,11 +31,14 @@ void app_main() {
 
     // Example: Receiving data
     uint8_t data[BUF_SIZE];
+    int len = 0;
+
     while (1) {
-        int len = uart_read_bytes(UART_NUM, data, BUF_SIZE - 1, pdMS_TO_TICKS(1000));
+        ESP_ERROR_CHECK(uart_get_buffered_data_len(UART_NUM, (size_t*)&len));
+        len = uart_read_bytes(UART_NUM, data, BUF_SIZE - 1, 100);
         if (len > 0) {
             data[len] = '\0'; // Null-terminate the string
-            ESP_LOGI(TAG, "Received: '%s'", (char *)data);
+            printf("Received: '%s'", (char *)data);
         }
     }
 }
