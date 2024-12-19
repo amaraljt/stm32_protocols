@@ -25,7 +25,7 @@
  the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
 #define EXAMPLE_ESP_WIFI_SSID      "i dare you to join"
-#define EXAMPLE_ESP_WIFI_PASS      ""
+#define EXAMPLE_ESP_WIFI_PASS      "monsters12"
 #define EXAMPLE_ESP_MAXIMUM_RETRY  3
 
 #if CONFIG_ESP_WPA3_SAE_PWE_HUNT_AND_PECK
@@ -126,9 +126,9 @@ void wifi_init_sta(void)
            * to WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK and set the password with length and format matching to
            * WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK standards.
            */
-          .threshold.authmode = ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD,
-          .sae_pwe_h2e = ESP_WIFI_SAE_MODE,
-          .sae_h2e_identifier = EXAMPLE_H2E_IDENTIFIER,
+          .threshold.authmode = WIFI_AUTH_OPEN,
+          .sae_pwe_h2e = WPA3_SAE_PWE_HUNT_AND_PECK,
+          .sae_h2e_identifier = "",
       },
   };
   ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
