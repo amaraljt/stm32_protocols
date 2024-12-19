@@ -23,7 +23,7 @@
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
 #define EXAMPLE_ESP_WIFI_SSID      "i dare you to join"
-#define EXAMPLE_ESP_WIFI_PASS      ""
+#define EXAMPLE_ESP_WIFI_PASS      "monsters12"
 #define EXAMPLE_ESP_WIFI_CHANNEL   1
 #define EXAMPLE_MAX_STA_CONN       WIFI_AUTH_WPA_WPA2_PSK
 
