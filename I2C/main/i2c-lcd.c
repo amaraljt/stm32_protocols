@@ -1,6 +1,7 @@
 #include "i2c-lcd.h"
 
-#define SLAVE_ADDRESS_LCD 0x4E
+#define SLAVE_ADDRESS_LCD 0x27
+#define I2C_NUM I2C_NUM_0
 
 esp_err_t err;
 
@@ -35,10 +36,8 @@ void lcd_send_data(char data){
 }
 
 void lcd_clear(void){
-  lcd_send_cmd(0x80);
-  for(int i = 0; i < 70; i++){
-    lcd_send_data(' ');
-  }
+  lcd_send_cmd(0x01);  // Use the clear display command
+  vTaskDelay(pdMS_TO_TICKS(2));  // Need to wait after clear
 }
 
 void lcd_put_cur(int row, int col){
@@ -50,9 +49,44 @@ void lcd_put_cur(int row, int col){
       col |= 0xC0;
       break;
   }
+  lcd_send_cmd(col);
 }
 
 void lcd_init(void){
-  
+  // 4 bit initialization
+  vTaskDelay(50000);
+  lcd_send_cmd(0x30);
+  vTaskDelay(5000);
+  lcd_send_cmd(0x30);
+  vTaskDelay(200);
+  lcd_send_cmd(0x30);
+  vTaskDelay(10000);
+  lcd_send_cmd(0x20);
+  vTaskDelay(10000);
+
+  // display initialization
+  lcd_send_cmd(0x28);
+  vTaskDelay(1000);
+  lcd_send_cmd(0x08);
+  vTaskDelay(1000);
+  lcd_send_cmd(0x01);
+  vTaskDelay(1000);
+  vTaskDelay(1000);
+  lcd_send_cmd(0x06);
+  vTaskDelay(1000);
+  lcd_send_cmd(0x0C);
+  vTaskDelay(1000);
 }
+
+void lcd_send_string(char *str){
+  while (*str) lcd_send_data(*str++);
+}
+
+
+
+
+
+
+
+
 
