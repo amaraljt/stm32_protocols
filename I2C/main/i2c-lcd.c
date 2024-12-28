@@ -54,28 +54,27 @@ void lcd_put_cur(int row, int col){
 
 void lcd_init(void){
   // 4 bit initialization
-  vTaskDelay(50000);
+  vTaskDelay(pdMS_TO_TICKS(50));
   lcd_send_cmd(0x30);
-  vTaskDelay(5000);
+  vTaskDelay(pdMS_TO_TICKS(5));
   lcd_send_cmd(0x30);
-  vTaskDelay(200);
+  vTaskDelay(pdMS_TO_TICKS(2));
   lcd_send_cmd(0x30);
-  vTaskDelay(10000);
+  vTaskDelay(pdMS_TO_TICKS(10));
   lcd_send_cmd(0x20);
-  vTaskDelay(10000);
+  vTaskDelay(pdMS_TO_TICKS(10));
 
   // display initialization
   lcd_send_cmd(0x28);
-  vTaskDelay(1000);
+  vTaskDelay(pdMS_TO_TICKS(1));
   lcd_send_cmd(0x08);
-  vTaskDelay(1000);
+  vTaskDelay(pdMS_TO_TICKS(1));
   lcd_send_cmd(0x01);
-  vTaskDelay(1000);
-  vTaskDelay(1000);
+  vTaskDelay(pdMS_TO_TICKS(2));
   lcd_send_cmd(0x06);
-  vTaskDelay(1000);
+  vTaskDelay(pdMS_TO_TICKS(1));
   lcd_send_cmd(0x0C);
-  vTaskDelay(1000);
+  vTaskDelay(pdMS_TO_TICKS(1));
 }
 
 void lcd_send_string(char *str){
