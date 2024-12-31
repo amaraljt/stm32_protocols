@@ -2,9 +2,13 @@
 #define I2C_LCD_H_
 
 #include "esp_log.h"
-#include "driver/i2c.h"
+#include "driver/i2c_master.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+
+extern i2c_master_dev_handle_t dev_handle;
+
+void i2c_master_init(void);
 
 void lcd_init(void); // initialize lcd_init
 
