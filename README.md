@@ -11,7 +11,7 @@ For the UART protocol I will be using an stm32 as the transmitter and an esp32 a
 
 
 ## I2C
-
+Connected an lcd1602 with an I2C backpack to an esp32 for displaying messages to the screen. This will be further developed where a button will initiate data transfer to the lcd.
 
 ## CAN
 
