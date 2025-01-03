@@ -1,12 +1,17 @@
 #include <stdio.h>
-#include "iot_button.h"
-#include "button_matrix.h"
+//#include "iot_button.h"
+//#include "button_matrix.h"
+#include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 // GPIO 15 - button
 // GPIO 2 - led
 
+#define LED    GPIO_NUM_2
+#define BUTTON GPIO_NUM_15
 
-void button_init(){
+/*void button_init(){
   // create gpio button
   button_config_t gpio_btn_cfg = {
     .type = BUTTON_TYPE_GPIO,
@@ -38,11 +43,21 @@ void matrix_button_init(){
   if(NULL == matrix_button) {
     ESP_LOGE(TAG, "Button create failed");
   }
-}
+}*/
 
 void app_main(void)
 {
-  button_init();
+  //button_init();
 
+  gpio_set_direction(LED, GPIO_MODE_OUTPUT);
+  gpio_set_direction(BUTTON, GPIO_MODE_INPUT);
 
+  while(1){
+    if(gpio_get_level(BUTTON) == 1){
+      gpio_set_level(LED, 1);
+    } else{
+      gpio_set_level(LED, 0);
+    }
+    vTaskDelay(1);
+  }
 }
