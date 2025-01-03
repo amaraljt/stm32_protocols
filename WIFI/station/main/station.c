@@ -24,11 +24,17 @@
 #include "lwip/sockets.h"
 #include "lwip/netdb.h"
 
+#include "driver/gpio.h"
+
 /* The examples use WiFi configuration that you can set via project configuration menu
 
  If you'd rather not, just change the below entries to strings with
  the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
+
+#define LED    GPIO_NUM_2
+#define BUTTON GPIO_NUM_15
+
 #define CONFIG_EXAMPLE_IPV4 192.168.4.1
 #define HOST_IP_ADDR "192.168.4.1"
 #define PORT 12345
@@ -75,7 +81,7 @@ static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_FAIL_BIT      BIT1
 
 static const char *TAG = "wifi station";
-static const char *payload = "Message from ESP32 ";
+static const char *payload = "Message from ESP32 station";
 
 static int s_retry_num = 0;
 
@@ -124,7 +130,7 @@ static void udp_client_task(void *pvParameters)
 
         ESP_LOGI(TAG, "Socket created, sending to %s:%d", HOST_IP_ADDR, PORT);
 
-        while (1) {
+        //while (1) {
 
             int err = sendto(sock, payload, strlen(payload), 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
             if (err < 0) {
@@ -154,7 +160,7 @@ static void udp_client_task(void *pvParameters)
             }
 
             vTaskDelay(2000 / portTICK_PERIOD_MS);
-        }
+       // }
 
         if (sock != -1) {
             ESP_LOGE(TAG, "Shutting down socket and restarting...");
@@ -275,5 +281,23 @@ void app_main(void)
    */
   //ESP_ERROR_CHECK(example_connect());
 
-  xTaskCreate(udp_client_task, "udp_client", 4096, NULL, 5, NULL);
+  gpio_set_direction(LED, GPIO_MODE_OUTPUT);
+  gpio_set_direction(BUTTON, GPIO_MODE_INPUT);
+
+  bool task_running = false;
+
+  while(1){
+    if(gpio_get_level(BUTTON) == 1){
+      gpio_set_level(LED, 1);
+      
+      if(!task_running){
+        task_running = true;
+        xTaskCreate(udp_client_task, "udp_client", 4096, NULL, 5, NULL);
+      }
+    }else{
+      gpio_set_level(LED, 0);
+      task_running = false;
+    }
+    vTaskDelay(1);
+  }
 }
