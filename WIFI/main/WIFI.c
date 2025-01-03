@@ -38,6 +38,7 @@
 #define PORT 12345
 
 static const char *TAG = "wifi softAP";
+static const char *payload = "AP message successfully received";
 
 // UDP Server Task
 static void udp_server_task(void *pvParameters)
@@ -146,10 +147,10 @@ static void udp_server_task(void *pvParameters)
         }
 
         rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string...
-        ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
+        ESP_LOGI(TAG, "Received %d bytes from client %s:", len, addr_str);
         ESP_LOGI(TAG, "%s", rx_buffer);
 
-        int err = sendto(sock, rx_buffer, len, 0, (struct sockaddr *)&source_addr, sizeof(source_addr));
+        int err = sendto(sock, payload, strlen(payload), 0, (struct sockaddr *)&source_addr, sizeof(source_addr));
         if (err < 0) {
           ESP_LOGE(TAG, "Error occurred during sending: errno %d", errno);
           break;
