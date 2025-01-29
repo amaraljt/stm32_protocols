@@ -1,0 +1,301 @@
+ARM GAS  /tmp/ccFllNvS.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/main.c"
+  20              		.section	.text.GPIO_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	GPIO_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	GPIO_Init:
+  28              	.LFB134:
+   1:Core/Src/main.c **** #include "stm32f4xx.h"
+   2:Core/Src/main.c **** 
+   3:Core/Src/main.c **** void GPIO_Init(void) {
+  29              		.loc 1 3 22 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   4:Core/Src/main.c ****     // Enable clock for GPIOA (this is the port we are using for pin PA5)
+   5:Core/Src/main.c ****     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;  
+  34              		.loc 1 5 5 view .LVU1
+  35              		.loc 1 5 8 is_stmt 0 view .LVU2
+  36 0000 0B4A     		ldr	r2, .L2
+  37 0002 136B     		ldr	r3, [r2, #48]
+  38              		.loc 1 5 18 view .LVU3
+  39 0004 43F00103 		orr	r3, r3, #1
+  40 0008 1363     		str	r3, [r2, #48]
+   6:Core/Src/main.c **** 
+   7:Core/Src/main.c ****     // Set PA5 as output (Mode = 01 for General purpose output mode)
+   8:Core/Src/main.c ****     GPIOA->MODER |= GPIO_MODER_MODE5_0;  
+  41              		.loc 1 8 5 is_stmt 1 view .LVU4
+  42              		.loc 1 8 10 is_stmt 0 view .LVU5
+  43 000a 0A4B     		ldr	r3, .L2+4
+  44 000c 1A68     		ldr	r2, [r3]
+  45              		.loc 1 8 18 view .LVU6
+  46 000e 42F48062 		orr	r2, r2, #1024
+  47 0012 1A60     		str	r2, [r3]
+   9:Core/Src/main.c **** 
+  10:Core/Src/main.c ****     // Set the output type to push-pull (default)
+  11:Core/Src/main.c ****     GPIOA->OTYPER &= ~GPIO_OTYPER_OT_5;  
+ARM GAS  /tmp/ccFllNvS.s 			page 2
+
+
+  48              		.loc 1 11 5 is_stmt 1 view .LVU7
+  49              		.loc 1 11 10 is_stmt 0 view .LVU8
+  50 0014 5A68     		ldr	r2, [r3, #4]
+  51              		.loc 1 11 19 view .LVU9
+  52 0016 22F02002 		bic	r2, r2, #32
+  53 001a 5A60     		str	r2, [r3, #4]
+  12:Core/Src/main.c **** 
+  13:Core/Src/main.c ****     // Set the output speed (Low speed)
+  14:Core/Src/main.c ****     GPIOA->OSPEEDR |= GPIO_OSPEEDR_OSPEED5;  
+  54              		.loc 1 14 5 is_stmt 1 view .LVU10
+  55              		.loc 1 14 10 is_stmt 0 view .LVU11
+  56 001c 9A68     		ldr	r2, [r3, #8]
+  57              		.loc 1 14 20 view .LVU12
+  58 001e 42F44062 		orr	r2, r2, #3072
+  59 0022 9A60     		str	r2, [r3, #8]
+  15:Core/Src/main.c **** 
+  16:Core/Src/main.c ****     // Disable pull-up/pull-down resistors (default)
+  17:Core/Src/main.c ****     GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD5;  
+  60              		.loc 1 17 5 is_stmt 1 view .LVU13
+  61              		.loc 1 17 10 is_stmt 0 view .LVU14
+  62 0024 DA68     		ldr	r2, [r3, #12]
+  63              		.loc 1 17 18 view .LVU15
+  64 0026 22F44062 		bic	r2, r2, #3072
+  65 002a DA60     		str	r2, [r3, #12]
+  18:Core/Src/main.c **** }
+  66              		.loc 1 18 1 view .LVU16
+  67 002c 7047     		bx	lr
+  68              	.L3:
+  69 002e 00BF     		.align	2
+  70              	.L2:
+  71 0030 00380240 		.word	1073887232
+  72 0034 00000240 		.word	1073872896
+  73              		.cfi_endproc
+  74              	.LFE134:
+  76              		.section	.text.GPIO_SetHigh,"ax",%progbits
+  77              		.align	1
+  78              		.global	GPIO_SetHigh
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	GPIO_SetHigh:
+  84              	.LFB135:
+  19:Core/Src/main.c **** 
+  20:Core/Src/main.c **** void GPIO_SetHigh(void) {
+  85              		.loc 1 20 25 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		@ link register save eliminated.
+  21:Core/Src/main.c ****     // Set PA5 high
+  22:Core/Src/main.c ****     GPIOA->ODR |= GPIO_ODR_OD5;  
+  90              		.loc 1 22 5 view .LVU18
+  91              		.loc 1 22 10 is_stmt 0 view .LVU19
+  92 0000 024A     		ldr	r2, .L5
+  93 0002 5369     		ldr	r3, [r2, #20]
+  94              		.loc 1 22 16 view .LVU20
+  95 0004 43F02003 		orr	r3, r3, #32
+ARM GAS  /tmp/ccFllNvS.s 			page 3
+
+
+  96 0008 5361     		str	r3, [r2, #20]
+  23:Core/Src/main.c **** }
+  97              		.loc 1 23 1 view .LVU21
+  98 000a 7047     		bx	lr
+  99              	.L6:
+ 100              		.align	2
+ 101              	.L5:
+ 102 000c 00000240 		.word	1073872896
+ 103              		.cfi_endproc
+ 104              	.LFE135:
+ 106              		.section	.text.GPIO_SetLow,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	GPIO_SetLow
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	GPIO_SetLow:
+ 114              	.LFB136:
+  24:Core/Src/main.c **** 
+  25:Core/Src/main.c **** void GPIO_SetLow(void) {
+ 115              		.loc 1 25 24 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+  26:Core/Src/main.c ****     // Set PA5 low
+  27:Core/Src/main.c ****     GPIOA->ODR &= ~GPIO_ODR_OD5;  
+ 120              		.loc 1 27 5 view .LVU23
+ 121              		.loc 1 27 10 is_stmt 0 view .LVU24
+ 122 0000 024A     		ldr	r2, .L8
+ 123 0002 5369     		ldr	r3, [r2, #20]
+ 124              		.loc 1 27 16 view .LVU25
+ 125 0004 23F02003 		bic	r3, r3, #32
+ 126 0008 5361     		str	r3, [r2, #20]
+  28:Core/Src/main.c **** }
+ 127              		.loc 1 28 1 view .LVU26
+ 128 000a 7047     		bx	lr
+ 129              	.L9:
+ 130              		.align	2
+ 131              	.L8:
+ 132 000c 00000240 		.word	1073872896
+ 133              		.cfi_endproc
+ 134              	.LFE136:
+ 136              		.section	.text.main,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	main
+ 139              		.syntax unified
+ 140              		.thumb
+ 141              		.thumb_func
+ 143              	main:
+ 144              	.LFB137:
+  29:Core/Src/main.c **** 
+  30:Core/Src/main.c **** int main(void) {
+ 145              		.loc 1 30 16 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ Volatile: function does not return.
+ 148              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  /tmp/ccFllNvS.s 			page 4
+
+
+ 149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150 0000 00B5     		push	{lr}
+ 151              		.cfi_def_cfa_offset 4
+ 152              		.cfi_offset 14, -4
+ 153 0002 83B0     		sub	sp, sp, #12
+ 154              		.cfi_def_cfa_offset 16
+  31:Core/Src/main.c ****     // Initialize GPIO
+  32:Core/Src/main.c ****     GPIO_Init();
+ 155              		.loc 1 32 5 view .LVU28
+ 156 0004 FFF7FEFF 		bl	GPIO_Init
+ 157              	.LVL0:
+  33:Core/Src/main.c **** 
+  34:Core/Src/main.c ****     // Turn on LED (Set PA5 high)
+  35:Core/Src/main.c ****     GPIO_SetHigh();
+ 158              		.loc 1 35 5 view .LVU29
+ 159 0008 FFF7FEFF 		bl	GPIO_SetHigh
+ 160              	.LVL1:
+ 161 000c 14E0     		b	.L15
+ 162              	.L12:
+ 163              	.LBB2:
+  36:Core/Src/main.c **** 
+  37:Core/Src/main.c ****     // Infinite loop
+  38:Core/Src/main.c ****     while (1) {
+  39:Core/Src/main.c ****         // Toggle LED every 500ms (optional)
+  40:Core/Src/main.c ****         for (volatile int i = 0; i < 1000000; i++) {}  // Delay
+ 164              		.loc 1 40 53 discriminator 3 view .LVU30
+ 165              		.loc 1 40 48 discriminator 3 view .LVU31
+ 166 000e 009B     		ldr	r3, [sp]
+ 167 0010 0133     		adds	r3, r3, #1
+ 168 0012 0093     		str	r3, [sp]
+ 169              	.L11:
+ 170              		.loc 1 40 36 discriminator 1 view .LVU32
+ 171 0014 009A     		ldr	r2, [sp]
+ 172 0016 0A4B     		ldr	r3, .L17
+ 173 0018 9A42     		cmp	r2, r3
+ 174 001a F8DD     		ble	.L12
+ 175              	.LBE2:
+  41:Core/Src/main.c ****         GPIO_SetLow();  // Turn off LED
+ 176              		.loc 1 41 9 view .LVU33
+ 177 001c FFF7FEFF 		bl	GPIO_SetLow
+ 178              	.LVL2:
+  42:Core/Src/main.c ****         for (volatile int i = 0; i < 1000000; i++) {}  // Delay
+ 179              		.loc 1 42 9 view .LVU34
+ 180              	.LBB3:
+ 181              		.loc 1 42 14 view .LVU35
+ 182              		.loc 1 42 27 is_stmt 0 view .LVU36
+ 183 0020 0023     		movs	r3, #0
+ 184 0022 0193     		str	r3, [sp, #4]
+ 185              		.loc 1 42 9 view .LVU37
+ 186 0024 02E0     		b	.L13
+ 187              	.L14:
+ 188              		.loc 1 42 53 is_stmt 1 discriminator 3 view .LVU38
+ 189              		.loc 1 42 48 discriminator 3 view .LVU39
+ 190 0026 019B     		ldr	r3, [sp, #4]
+ 191 0028 0133     		adds	r3, r3, #1
+ 192 002a 0193     		str	r3, [sp, #4]
+ 193              	.L13:
+ARM GAS  /tmp/ccFllNvS.s 			page 5
+
+
+ 194              		.loc 1 42 36 discriminator 1 view .LVU40
+ 195 002c 019A     		ldr	r2, [sp, #4]
+ 196 002e 044B     		ldr	r3, .L17
+ 197 0030 9A42     		cmp	r2, r3
+ 198 0032 F8DD     		ble	.L14
+ 199              	.LBE3:
+  43:Core/Src/main.c ****         GPIO_SetHigh();  // Turn on LED
+ 200              		.loc 1 43 9 view .LVU41
+ 201 0034 FFF7FEFF 		bl	GPIO_SetHigh
+ 202              	.LVL3:
+  38:Core/Src/main.c ****         // Toggle LED every 500ms (optional)
+ 203              		.loc 1 38 11 view .LVU42
+ 204              	.L15:
+  38:Core/Src/main.c ****         // Toggle LED every 500ms (optional)
+ 205              		.loc 1 38 5 view .LVU43
+  40:Core/Src/main.c ****         GPIO_SetLow();  // Turn off LED
+ 206              		.loc 1 40 9 view .LVU44
+ 207              	.LBB4:
+  40:Core/Src/main.c ****         GPIO_SetLow();  // Turn off LED
+ 208              		.loc 1 40 14 view .LVU45
+  40:Core/Src/main.c ****         GPIO_SetLow();  // Turn off LED
+ 209              		.loc 1 40 27 is_stmt 0 view .LVU46
+ 210 0038 0023     		movs	r3, #0
+ 211 003a 0093     		str	r3, [sp]
+  40:Core/Src/main.c ****         GPIO_SetLow();  // Turn off LED
+ 212              		.loc 1 40 9 view .LVU47
+ 213 003c EAE7     		b	.L11
+ 214              	.L18:
+ 215 003e 00BF     		.align	2
+ 216              	.L17:
+ 217 0040 3F420F00 		.word	999999
+ 218              	.LBE4:
+ 219              		.cfi_endproc
+ 220              	.LFE137:
+ 222              		.text
+ 223              	.Letext0:
+ 224              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 225              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 226              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ARM GAS  /tmp/ccFllNvS.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccFllNvS.s:21     .text.GPIO_Init:00000000 $t
+     /tmp/ccFllNvS.s:27     .text.GPIO_Init:00000000 GPIO_Init
+     /tmp/ccFllNvS.s:71     .text.GPIO_Init:00000030 $d
+     /tmp/ccFllNvS.s:77     .text.GPIO_SetHigh:00000000 $t
+     /tmp/ccFllNvS.s:83     .text.GPIO_SetHigh:00000000 GPIO_SetHigh
+     /tmp/ccFllNvS.s:102    .text.GPIO_SetHigh:0000000c $d
+     /tmp/ccFllNvS.s:107    .text.GPIO_SetLow:00000000 $t
+     /tmp/ccFllNvS.s:113    .text.GPIO_SetLow:00000000 GPIO_SetLow
+     /tmp/ccFllNvS.s:132    .text.GPIO_SetLow:0000000c $d
+     /tmp/ccFllNvS.s:137    .text.main:00000000 $t
+     /tmp/ccFllNvS.s:143    .text.main:00000000 main
+     /tmp/ccFllNvS.s:217    .text.main:00000040 $d
+
+NO UNDEFINED SYMBOLS
