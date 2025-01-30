@@ -1,47 +1,28 @@
+// Main.c
+
 #include "stm32f4xx.h"
 
-void GPIO_Init(void) {
-    // Enable clock for GPIOA (this is the port we are using for pin PA5)
-    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;  
+int main(){
 
-    // Set PA5 as output (Mode = 01 for General purpose output mode)
-    GPIOA->MODER |= GPIO_MODER_MODE5_0;  
+    RCC->AHB1ENR |= (1 << 0); // Enable GPIOA clock
 
-    // Set the output type to push-pull (default)
-    GPIOA->OTYPER &= ~GPIO_OTYPER_OT_5;  
+    GPIOA->MODER |= (1 << 10); // Output Mode for Pin5 : (1 @ bit 2y)
+    GPIOA->MODER &= ~(1 << 11); // Output Mode for Pin5 : (0 @ bit 2y+1)
 
-    // Set the output speed (Low speed)
-    GPIOA->OSPEEDR |= GPIO_OSPEEDR_OSPEED5;  
+    GPIOA->OTYPER &= ~(1 << 5); // Output Push-pull : (0 @ bit 5)
 
-    // Disable pull-up/pull-down resistors (default)
-    GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD5;  
-}
+    GPIOA->OSPEEDR |= (1 << 11); // Fast Speed : (1 @ bit 2y+1)
+    GPIOA->OSPEEDR &= ~(1 << 10); // Fast Speed : (0 @ bit 2y)
 
-void GPIO_SetHigh(void) {
-    // Set PA5 high
-    GPIOA->ODR |= GPIO_ODR_OD5;  
-}
+    GPIOA->PUPDR &= ~((1 << 10) | (1 << 11)); // No Pull-up/down resistor : (00 @ bits 2y:2y+1)
 
-void GPIO_SetLow(void) {
-    // Set PA5 low
-    GPIOA->ODR &= ~GPIO_ODR_OD5;  
-}
+    while(1){
 
-int main(void) {
-    // Initialize GPIO
-    GPIO_Init();
-
-    // Turn on LED (Set PA5 high)
-    GPIO_SetHigh();
-
-    // Infinite loop
-    while (1) {
-        // Toggle LED every 500ms (optional)
         for (volatile int i = 0; i < 1000000; i++) {}  // Delay
-        GPIO_SetLow();  // Turn off LED
+        GPIOA->BSRR = (1 << 5); // Set Pin PA5 High
+
         for (volatile int i = 0; i < 1000000; i++) {}  // Delay
-        GPIO_SetHigh();  // Turn on LED
+        GPIOA->BSRR = (1 << 21); // Reset Pin PA5 Low
     }
-
     return 0;
 }
