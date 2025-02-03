@@ -1,0 +1,58 @@
+ARM GAS  /tmp/ccS70it2.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/main.c"
+  20              		.section	.text.main,"ax",%progbits
+  21              		.align	1
+  22              		.global	main
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	main:
+  28              	.LFB134:
+   1:Core/Src/main.c **** #include "main.h"
+   2:Core/Src/main.c **** 
+   3:Core/Src/main.c **** 
+   4:Core/Src/main.c **** int main(){
+  29              		.loc 1 4 11 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   5:Core/Src/main.c ****   return 0;
+  34              		.loc 1 5 3 view .LVU1
+   6:Core/Src/main.c **** }...
+  35              		.loc 1 6 1 is_stmt 0 view .LVU2
+  36 0000 0020     		movs	r0, #0
+  37 0002 7047     		bx	lr
+  38              		.cfi_endproc
+  39              	.LFE134:
+  41              		.text
+  42              	.Letext0:
+ARM GAS  /tmp/ccS70it2.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccS70it2.s:21     .text.main:00000000 $t
+     /tmp/ccS70it2.s:27     .text.main:00000000 main
+
+NO UNDEFINED SYMBOLS
