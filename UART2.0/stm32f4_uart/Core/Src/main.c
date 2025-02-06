@@ -38,20 +38,24 @@ int main(){
   // Step 0. Initialize GPIOA clock
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
-
   // Step 1. Initalize I/O Pins as alternate mode : PA2 - USART2_TX & PA3 - USART2_RX
-
   GPIOA->MODER |= (2 << 4); // alternate function for PA2
   GPIOA->MODER |= (2 << 6); // alternate function for PA3
 
 
-  // Step 3. Set alternate functions for PA2 & PA3
-  GPIOA->AF[0] |= (7 << 8);
-  GPIOA->AF[0] |= (7 << 12);
+  // Step 3. Set alternate functions for PA2 & PA3 : 0111 <- USART
+  GPIOA->AFR[0] |= (7 << 8);
+  GPIOA->AFR[0] |= (7 << 12);
 
+  // Step 4. Initialize USART
+  USART2->CR1 |= (1 << 13); // USART Enable
+  USART2->CR1 |= (1 << 3); // Transmitter Enable
+  USART2->CR1 |= (1 << 2); // Receiver Enable
 
+  USART2->BRR = (7 << 0) | (24 << 4); // Baud Rate of 115200, PCLK1 @ 45MHz
 
-  
+  // Step 5. Send Data
+
 
 
 
