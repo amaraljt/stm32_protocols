@@ -1,5 +1,6 @@
 #include "main.h"
 #include "stm32f4xx.h"
+#include <stdio.h>
 
 
 // typedef struct
@@ -35,27 +36,47 @@
 
 
 int main(){
-  // Step 0. Initialize GPIOA clock
+  printf("Main start\n");
+  // Step 0. Initialize GPIOA & USART1 clock
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+  RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 
-  // Step 1. Initalize I/O Pins as alternate mode : PA2 - USART2_TX & PA3 - USART2_RX
-  GPIOA->MODER |= (2 << 4); // alternate function for PA2
-  GPIOA->MODER |= (2 << 6); // alternate function for PA3
+  // Step 1. Initalize I/O Pins as alternate mode : PA2 - USART1_TX & PA3 - USART1_RX
+  GPIOA->MODER |= (2 << 18); // alternate function for PA9
+  GPIOA->MODER |= (2 << 20); // alternate function for PA10
 
+  GPIOA->OSPEEDR |= ((3 << 18) | (3 << 20)); // High Speed for PA2 & PA3
 
-  // Step 3. Set alternate functions for PA2 & PA3 : 0111 <- USART
-  GPIOA->AFR[0] |= (7 << 8);
-  GPIOA->AFR[0] |= (7 << 12);
+  // Step . Set alternate functions for PA2 & PA3 : 0111 <- USART
+  GPIOA->AFR[1] |= (7 << 4); // PA9  -> AF7 (USART_TX)
+  GPIOA->AFR[1] |= (7 << 8); // PA10 -> AF7 (USART_RX)
 
-  // Step 4. Initialize USART
-  USART2->CR1 |= (1 << 13); // USART Enable
-  USART2->CR1 |= (1 << 3); // Transmitter Enable
-  USART2->CR1 |= (1 << 2); // Receiver Enable
+  // Step 3. Initialize USART
+  USART1->CR1 = 0x00; // clear
+  USART1->CR1 |= (1 << 13); // USART Enable
+  USART1->CR1 |= ~(1 << 12); // Define 8 bit word length
+  USART1->CR1 |= (1 << 3); // Transmitter Enable
+  USART1->CR1 |= (1 << 2); // Receiver Enable
 
-  USART2->BRR = (7 << 0) | (24 << 4); // Baud Rate of 115200, PCLK1 @ 45MHz
+  USART1->CR1 &= ~(USART_CR1_PCE | USART_CR1_PS); // Disable parity
+  USART1->CR2 &= ~(USART_CR2_STOP); // 1 stop bit
 
-  // Step 5. Send Data
+  USART1->BRR = (84000000 / 115200); // Baud Rate of 115200, PCLK2 @ 45MHz
 
+  // Step 4. Send Data
+  char data = 'G';
+  while(1){
+    while(!(USART1->SR & (1 << 7))); // Wait for Transmit Data Register to be empty
+    USART1->DR = data;
+    while(!(USART1->SR & (1 << 6))); // Wait for TC to SET
+    for (volatile int i = 0; i < 10000000; i++) {}  // Delay
+  }
+
+  // Step 5. Receive Data
+  // uint8_t tempData;
+  // while(!(USART1->SR & (1 << 5))); // wait for RXNE to SET
+  // tempData = USART1->DR; // read data
+  // printf("Received: %u\n", tempData);
 
 
 
