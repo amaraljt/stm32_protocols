@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccyoix4t.s 			page 1
+ARM GAS  /tmp/ccfzml01.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,11 +20,368 @@ ARM GAS  /tmp/ccyoix4t.s 			page 1
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
   19              		.file 1 "Core/Src/uart.c"
-  20              	.Letext0:
-ARM GAS  /tmp/ccyoix4t.s 			page 2
+  20              		.section	.text.Delay_ms,"ax",%progbits
+  21              		.align	1
+  22              		.global	Delay_ms
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	Delay_ms:
+  28              	.LVL0:
+  29              	.LFB134:
+   1:Core/Src/uart.c **** #include "uart.h"
+   2:Core/Src/uart.c **** 
+   3:Core/Src/uart.c **** /*
+   4:Core/Src/uart.c **** Delay_ms():
+   5:Core/Src/uart.c ****     Delay in milliseconds
+   6:Core/Src/uart.c **** */
+   7:Core/Src/uart.c **** void Delay_ms(int delay){
+  30              		.loc 1 7 25 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 7 25 is_stmt 0 view .LVU1
+  36 0000 82B0     		sub	sp, sp, #8
+  37              		.cfi_def_cfa_offset 8
+   8:Core/Src/uart.c ****     for (volatile int i = 0; i < delay; i++) {}
+  38              		.loc 1 8 5 is_stmt 1 view .LVU2
+  39              	.LBB2:
+  40              		.loc 1 8 10 view .LVU3
+  41              		.loc 1 8 23 is_stmt 0 view .LVU4
+  42 0002 0023     		movs	r3, #0
+  43 0004 0193     		str	r3, [sp, #4]
+  44              		.loc 1 8 5 view .LVU5
+  45 0006 02E0     		b	.L2
+  46              	.L3:
+  47              		.loc 1 8 47 is_stmt 1 discriminator 3 view .LVU6
+  48              		.loc 1 8 42 discriminator 3 view .LVU7
+  49 0008 019B     		ldr	r3, [sp, #4]
+  50 000a 0133     		adds	r3, r3, #1
+ARM GAS  /tmp/ccfzml01.s 			page 2
+
+
+  51 000c 0193     		str	r3, [sp, #4]
+  52              	.L2:
+  53              		.loc 1 8 32 discriminator 1 view .LVU8
+  54 000e 019B     		ldr	r3, [sp, #4]
+  55 0010 8342     		cmp	r3, r0
+  56 0012 F9DB     		blt	.L3
+  57              	.LBE2:
+   9:Core/Src/uart.c **** }
+  58              		.loc 1 9 1 is_stmt 0 view .LVU9
+  59 0014 02B0     		add	sp, sp, #8
+  60              		.cfi_def_cfa_offset 0
+  61              		@ sp needed
+  62 0016 7047     		bx	lr
+  63              		.cfi_endproc
+  64              	.LFE134:
+  66              		.section	.text.Clock_Init,"ax",%progbits
+  67              		.align	1
+  68              		.global	Clock_Init
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  73              	Clock_Init:
+  74              	.LFB135:
+  10:Core/Src/uart.c **** 
+  11:Core/Src/uart.c **** /* 
+  12:Core/Src/uart.c **** Clock_Init():
+  13:Core/Src/uart.c ****     Initializes GPIOA and USART1 Clock
+  14:Core/Src/uart.c **** */
+  15:Core/Src/uart.c **** void Clock_Init(){
+  75              		.loc 1 15 18 is_stmt 1 view -0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  16:Core/Src/uart.c ****     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+  80              		.loc 1 16 5 view .LVU11
+  81              		.loc 1 16 8 is_stmt 0 view .LVU12
+  82 0000 044B     		ldr	r3, .L6
+  83 0002 1A6B     		ldr	r2, [r3, #48]
+  84              		.loc 1 16 18 view .LVU13
+  85 0004 42F00102 		orr	r2, r2, #1
+  86 0008 1A63     		str	r2, [r3, #48]
+  17:Core/Src/uart.c ****     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+  87              		.loc 1 17 5 is_stmt 1 view .LVU14
+  88              		.loc 1 17 8 is_stmt 0 view .LVU15
+  89 000a 5A6C     		ldr	r2, [r3, #68]
+  90              		.loc 1 17 18 view .LVU16
+  91 000c 42F01002 		orr	r2, r2, #16
+  92 0010 5A64     		str	r2, [r3, #68]
+  18:Core/Src/uart.c **** }
+  93              		.loc 1 18 1 view .LVU17
+  94 0012 7047     		bx	lr
+  95              	.L7:
+  96              		.align	2
+  97              	.L6:
+  98 0014 00380240 		.word	1073887232
+  99              		.cfi_endproc
+ARM GAS  /tmp/ccfzml01.s 			page 3
+
+
+ 100              	.LFE135:
+ 102              		.section	.text.GPIO_Init,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	GPIO_Init
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 109              	GPIO_Init:
+ 110              	.LFB136:
+  19:Core/Src/uart.c **** 
+  20:Core/Src/uart.c **** /*
+  21:Core/Src/uart.c **** GPIO_Init():
+  22:Core/Src/uart.c ****     Initialize GPIOA port
+  23:Core/Src/uart.c **** */
+  24:Core/Src/uart.c **** void GPIO_Init(){
+ 111              		.loc 1 24 17 is_stmt 1 view -0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		@ link register save eliminated.
+  25:Core/Src/uart.c ****     // Step 1. Initalize I/O Pins as alternate mode : PA9 - USART1_TX & PA10 - USART1_RX
+  26:Core/Src/uart.c ****     GPIOA->MODER |= (2 << 18); // alternate function for PA9
+ 116              		.loc 1 26 5 view .LVU19
+ 117              		.loc 1 26 10 is_stmt 0 view .LVU20
+ 118 0000 0A4B     		ldr	r3, .L9
+ 119 0002 1A68     		ldr	r2, [r3]
+ 120              		.loc 1 26 18 view .LVU21
+ 121 0004 42F40022 		orr	r2, r2, #524288
+ 122 0008 1A60     		str	r2, [r3]
+  27:Core/Src/uart.c ****     GPIOA->MODER |= (2 << 20); // alternate function for PA10
+ 123              		.loc 1 27 5 is_stmt 1 view .LVU22
+ 124              		.loc 1 27 10 is_stmt 0 view .LVU23
+ 125 000a 1A68     		ldr	r2, [r3]
+ 126              		.loc 1 27 18 view .LVU24
+ 127 000c 42F40012 		orr	r2, r2, #2097152
+ 128 0010 1A60     		str	r2, [r3]
+  28:Core/Src/uart.c **** 
+  29:Core/Src/uart.c ****     GPIOA->OSPEEDR |= ((3 << 18) | (3 << 20)); // High Speed for PA9 & PA10
+ 129              		.loc 1 29 5 is_stmt 1 view .LVU25
+ 130              		.loc 1 29 10 is_stmt 0 view .LVU26
+ 131 0012 9A68     		ldr	r2, [r3, #8]
+ 132              		.loc 1 29 20 view .LVU27
+ 133 0014 42F47012 		orr	r2, r2, #3932160
+ 134 0018 9A60     		str	r2, [r3, #8]
+  30:Core/Src/uart.c **** 
+  31:Core/Src/uart.c ****     // Step 2. Set alternate functions for PA9 & PA10 : 0111 <- USART
+  32:Core/Src/uart.c ****     GPIOA->AFR[1] |= (7 << 4); // PA9  -> AF7 (USART_TX)
+ 135              		.loc 1 32 5 is_stmt 1 view .LVU28
+ 136              		.loc 1 32 15 is_stmt 0 view .LVU29
+ 137 001a 5A6A     		ldr	r2, [r3, #36]
+ 138              		.loc 1 32 19 view .LVU30
+ 139 001c 42F07002 		orr	r2, r2, #112
+ 140 0020 5A62     		str	r2, [r3, #36]
+  33:Core/Src/uart.c ****     GPIOA->AFR[1] |= (7 << 8); // PA10 -> AF7 (USART_RX)
+ 141              		.loc 1 33 5 is_stmt 1 view .LVU31
+ 142              		.loc 1 33 15 is_stmt 0 view .LVU32
+ 143 0022 5A6A     		ldr	r2, [r3, #36]
+ARM GAS  /tmp/ccfzml01.s 			page 4
+
+
+ 144              		.loc 1 33 19 view .LVU33
+ 145 0024 42F4E062 		orr	r2, r2, #1792
+ 146 0028 5A62     		str	r2, [r3, #36]
+  34:Core/Src/uart.c **** }
+ 147              		.loc 1 34 1 view .LVU34
+ 148 002a 7047     		bx	lr
+ 149              	.L10:
+ 150              		.align	2
+ 151              	.L9:
+ 152 002c 00000240 		.word	1073872896
+ 153              		.cfi_endproc
+ 154              	.LFE136:
+ 156              		.section	.text.USART_Init,"ax",%progbits
+ 157              		.align	1
+ 158              		.global	USART_Init
+ 159              		.syntax unified
+ 160              		.thumb
+ 161              		.thumb_func
+ 163              	USART_Init:
+ 164              	.LFB137:
+  35:Core/Src/uart.c **** 
+  36:Core/Src/uart.c **** /*
+  37:Core/Src/uart.c **** UART_Init():
+  38:Core/Src/uart.c ****     Initialize USART1
+  39:Core/Src/uart.c **** */
+  40:Core/Src/uart.c **** void USART_Init(){
+ 165              		.loc 1 40 18 is_stmt 1 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+  41:Core/Src/uart.c ****     // Step 3. Initialize USART
+  42:Core/Src/uart.c ****     USART1->CR1 |= (1 << 13); // USART Enable
+ 170              		.loc 1 42 5 view .LVU36
+ 171              		.loc 1 42 11 is_stmt 0 view .LVU37
+ 172 0000 084B     		ldr	r3, .L12
+ 173 0002 DA68     		ldr	r2, [r3, #12]
+ 174              		.loc 1 42 17 view .LVU38
+ 175 0004 42F40052 		orr	r2, r2, #8192
+ 176 0008 DA60     		str	r2, [r3, #12]
+  43:Core/Src/uart.c ****     USART1->CR1 &= ~(1 << 12);  // 0: 1 Start bit, 8 Data bits, n Stop bit
+ 177              		.loc 1 43 5 is_stmt 1 view .LVU39
+ 178              		.loc 1 43 11 is_stmt 0 view .LVU40
+ 179 000a DA68     		ldr	r2, [r3, #12]
+ 180              		.loc 1 43 17 view .LVU41
+ 181 000c 22F48052 		bic	r2, r2, #4096
+ 182 0010 DA60     		str	r2, [r3, #12]
+  44:Core/Src/uart.c **** 
+  45:Core/Src/uart.c ****     USART1->BRR = 782; // Baud Rate of 115200, PCLK2 @ 90MHz max
+ 183              		.loc 1 45 5 is_stmt 1 view .LVU42
+ 184              		.loc 1 45 17 is_stmt 0 view .LVU43
+ 185 0012 40F20E32 		movw	r2, #782
+ 186 0016 9A60     		str	r2, [r3, #8]
+  46:Core/Src/uart.c **** 
+  47:Core/Src/uart.c ****     USART1->CR1 |= (1 << 3);  // Transmitter Enable
+ 187              		.loc 1 47 5 is_stmt 1 view .LVU44
+ 188              		.loc 1 47 11 is_stmt 0 view .LVU45
+ARM GAS  /tmp/ccfzml01.s 			page 5
+
+
+ 189 0018 DA68     		ldr	r2, [r3, #12]
+ 190              		.loc 1 47 17 view .LVU46
+ 191 001a 42F00802 		orr	r2, r2, #8
+ 192 001e DA60     		str	r2, [r3, #12]
+  48:Core/Src/uart.c **** }
+ 193              		.loc 1 48 1 view .LVU47
+ 194 0020 7047     		bx	lr
+ 195              	.L13:
+ 196 0022 00BF     		.align	2
+ 197              	.L12:
+ 198 0024 00100140 		.word	1073811456
+ 199              		.cfi_endproc
+ 200              	.LFE137:
+ 202              		.section	.text.USART1_SendChar,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	USART1_SendChar
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	USART1_SendChar:
+ 210              	.LFB138:
+  49:Core/Src/uart.c **** 
+  50:Core/Src/uart.c **** void USART1_SendChar(uint8_t c){
+ 211              		.loc 1 50 32 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 216              	.LVL1:
+ 217              	.L15:
+  51:Core/Src/uart.c ****     while(!(USART1->SR & (1 << 7))); // Wait for Transmit Data Register to be empty
+ 218              		.loc 1 51 11 discriminator 1 view .LVU49
+ 219              		.loc 1 51 19 is_stmt 0 discriminator 1 view .LVU50
+ 220 0000 064B     		ldr	r3, .L17
+ 221 0002 1B68     		ldr	r3, [r3]
+ 222              		.loc 1 51 11 discriminator 1 view .LVU51
+ 223 0004 13F0800F 		tst	r3, #128
+ 224 0008 FAD0     		beq	.L15
+  52:Core/Src/uart.c ****     USART1->DR = c;
+ 225              		.loc 1 52 5 is_stmt 1 view .LVU52
+ 226              		.loc 1 52 16 is_stmt 0 view .LVU53
+ 227 000a 044B     		ldr	r3, .L17
+ 228 000c 5860     		str	r0, [r3, #4]
+  53:Core/Src/uart.c ****     while(!(USART1->SR & (1 << 6))); // Wait for TC to SET
+ 229              		.loc 1 53 5 is_stmt 1 view .LVU54
+ 230              	.L16:
+ 231              		.loc 1 53 11 discriminator 1 view .LVU55
+ 232              		.loc 1 53 19 is_stmt 0 discriminator 1 view .LVU56
+ 233 000e 034B     		ldr	r3, .L17
+ 234 0010 1B68     		ldr	r3, [r3]
+ 235              		.loc 1 53 11 discriminator 1 view .LVU57
+ 236 0012 13F0400F 		tst	r3, #64
+ 237 0016 FAD0     		beq	.L16
+  54:Core/Src/uart.c **** }
+ 238              		.loc 1 54 1 view .LVU58
+ 239 0018 7047     		bx	lr
+ 240              	.L18:
+ARM GAS  /tmp/ccfzml01.s 			page 6
+
+
+ 241 001a 00BF     		.align	2
+ 242              	.L17:
+ 243 001c 00100140 		.word	1073811456
+ 244              		.cfi_endproc
+ 245              	.LFE138:
+ 247              		.section	.text.USART1_SendString,"ax",%progbits
+ 248              		.align	1
+ 249              		.global	USART1_SendString
+ 250              		.syntax unified
+ 251              		.thumb
+ 252              		.thumb_func
+ 254              	USART1_SendString:
+ 255              	.LVL2:
+ 256              	.LFB139:
+  55:Core/Src/uart.c **** 
+  56:Core/Src/uart.c **** void USART1_SendString(char *str){
+ 257              		.loc 1 56 34 is_stmt 1 view -0
+ 258              		.cfi_startproc
+ 259              		@ args = 0, pretend = 0, frame = 0
+ 260              		@ frame_needed = 0, uses_anonymous_args = 0
+ 261              		.loc 1 56 34 is_stmt 0 view .LVU60
+ 262 0000 10B5     		push	{r4, lr}
+ 263              		.cfi_def_cfa_offset 8
+ 264              		.cfi_offset 4, -8
+ 265              		.cfi_offset 14, -4
+ 266 0002 0446     		mov	r4, r0
+  57:Core/Src/uart.c ****     while(*str){
+ 267              		.loc 1 57 5 is_stmt 1 view .LVU61
+ 268              		.loc 1 57 10 is_stmt 0 view .LVU62
+ 269 0004 02E0     		b	.L20
+ 270              	.LVL3:
+ 271              	.L21:
+  58:Core/Src/uart.c ****         USART1_SendChar(*str++);
+ 272              		.loc 1 58 9 is_stmt 1 view .LVU63
+ 273              		.loc 1 58 29 is_stmt 0 view .LVU64
+ 274 0006 0134     		adds	r4, r4, #1
+ 275              	.LVL4:
+ 276              		.loc 1 58 9 view .LVU65
+ 277 0008 FFF7FEFF 		bl	USART1_SendChar
+ 278              	.LVL5:
+ 279              	.L20:
+  57:Core/Src/uart.c ****     while(*str){
+ 280              		.loc 1 57 11 is_stmt 1 view .LVU66
+ 281 000c 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 282 000e 0028     		cmp	r0, #0
+ 283 0010 F9D1     		bne	.L21
+  59:Core/Src/uart.c ****     }
+  60:Core/Src/uart.c **** }
+ 284              		.loc 1 60 1 is_stmt 0 view .LVU67
+ 285 0012 10BD     		pop	{r4, pc}
+ 286              		.loc 1 60 1 view .LVU68
+ 287              		.cfi_endproc
+ 288              	.LFE139:
+ 290              		.text
+ 291              	.Letext0:
+ 292              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 293              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  /tmp/ccfzml01.s 			page 7
+
+
+ 294              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ARM GAS  /tmp/ccfzml01.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 uart.c
+     /tmp/ccfzml01.s:21     .text.Delay_ms:00000000 $t
+     /tmp/ccfzml01.s:27     .text.Delay_ms:00000000 Delay_ms
+     /tmp/ccfzml01.s:67     .text.Clock_Init:00000000 $t
+     /tmp/ccfzml01.s:73     .text.Clock_Init:00000000 Clock_Init
+     /tmp/ccfzml01.s:98     .text.Clock_Init:00000014 $d
+     /tmp/ccfzml01.s:103    .text.GPIO_Init:00000000 $t
+     /tmp/ccfzml01.s:109    .text.GPIO_Init:00000000 GPIO_Init
+     /tmp/ccfzml01.s:152    .text.GPIO_Init:0000002c $d
+     /tmp/ccfzml01.s:157    .text.USART_Init:00000000 $t
+     /tmp/ccfzml01.s:163    .text.USART_Init:00000000 USART_Init
+     /tmp/ccfzml01.s:198    .text.USART_Init:00000024 $d
+     /tmp/ccfzml01.s:203    .text.USART1_SendChar:00000000 $t
+     /tmp/ccfzml01.s:209    .text.USART1_SendChar:00000000 USART1_SendChar
+     /tmp/ccfzml01.s:243    .text.USART1_SendChar:0000001c $d
+     /tmp/ccfzml01.s:248    .text.USART1_SendString:00000000 $t
+     /tmp/ccfzml01.s:254    .text.USART1_SendString:00000000 USART1_SendString
 
 NO UNDEFINED SYMBOLS
